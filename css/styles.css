@@ -1,0 +1,29 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#eas {
+    /* display: flex;
+    justify-content: center; */
+    margin: 50px;
+}
+
+#grid {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center;
+    justify-content: center; */
+    /* flex: auto; */
+    height: 1024px;
+    width: 1024px;
+}
+
+#grid div {
+    display: flex;
+    flex: auto;
+    background-color: lightslategray;
+    border-color: black;
+}
