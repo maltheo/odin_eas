@@ -10,12 +10,15 @@
     <div id="input_form">
         <h3>Etch-a-sketch using divs!</h3>
         <div>
-            <input id="row_count">
-            <button id="submit_rowcount">Set rows</button>
+            <label for="row_count">Number of rows</label>
+            <input id="row_count" value="16">
         </div>
         <div>
-            <input id="col_count">
-            <button id="submit_colcount">Set columns</button>
+            <label for="col_count">Number of columns</label>
+            <input id="col_count" value="16">
+        </div>
+        <div>
+            <button id="buildGrid">Build grid</button>
         </div>
     </div>
 
@@ -38,31 +41,30 @@
         console.log(gridSize);
 
         // set up a grid of divs with a background color
-        const ROW_COUNT = 16;
-        const COL_COUNT = 16;
-        const grid = document.querySelector("#grid");
+        function makeGrid(ROW_COUNT = 16, COL_COUNT = 16) {
+            // const ROW_COUNT = 16;
+            // const COL_COUNT = 16;
+            const grid = document.querySelector("#grid");
 
-        for (let col_index = 0; col_index <= COL_COUNT -1; col_index++) {
-            row_div = document.createElement("div");
-            for (let row_index = 0; row_index <= ROW_COUNT - 1; row_index++) {
-                col_div = document.createElement("div");
-                // col_div.addEventListener("mousover", (event) => {
-                //     console.log("Hover!");
-                // });
-                col_div.setAttribute("id", `${row_index}_${col_index}`);
-                col_div.setAttribute("class", "eas_div");
-                row_div.appendChild(col_div);
+            for (let col_index = 0; col_index <= COL_COUNT -1; col_index++) {
+                row_div = document.createElement("div");
+                for (let row_index = 0; row_index <= ROW_COUNT - 1; row_index++) {
+                    col_div = document.createElement("div");
+                    col_div.setAttribute("id", `${row_index}_${col_index}`);
+                    col_div.setAttribute("class", "eas_div");
+                    row_div.appendChild(col_div);
+                };
+                grid.appendChild(row_div);
             };
-            grid.appendChild(row_div);
+            // make background color of hovered-over div change
+            grid.addEventListener("mouseover", (event) => {
+                console.log(event.target);
+                thisDiv = document.getElementById(event.target.id);
+                thisDiv.style.backgroundColor = "black";
+                // setTimeout(() => {thisDiv.style.backgroundColor = "pink"}, 50)
+            });
         };
-
-        // make background color of hovered-over div change
-        grid.addEventListener("mouseover", (event) => {
-            console.log(event.target);
-            thisDiv = document.getElementById(event.target.id);
-            thisDiv.style.backgroundColor = "black";
-            // setTimeout(() => {thisDiv.style.backgroundColor = "pink"}, 50)
-        });
+        makeGrid();
 
         // add functionality to clear screen button
         const clearScreen = document.getElementById("clearScreen");
@@ -75,6 +77,14 @@
         function resetBackground(item) {
             item.style.backgroundColor = "lightslategray";
         }
+
+        const buildGrid = document.getElementById("buildGrid");
+        buildGrid.addEventListener("click", () => {
+            let rows = Number(document.getElementById("row_count").value);
+            let cols = Number(document.getElementById("col_count").value);
+            grid.textContent = "";
+            makeGrid(rows, cols);
+        });
     </script>
 </body>
 </html>
