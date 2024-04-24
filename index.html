@@ -31,7 +31,7 @@
             <button id="buildGrid">Build grid</button>
         </div>
         <button id="clearScreen">Clear screen</button>
-        <button id="colourMode" onclick="changeColourMode(colourMode)">Colour mode: black</button>
+        <!-- <button id="colourMode" onclick="changeColourMode(colourMode)">Colour mode: black</button> -->
     </div>
 
     <script>
@@ -77,8 +77,8 @@
             grid.addEventListener("mouseover", (event) => {
                 console.log(event.target);
                 thisDiv = document.getElementById(event.target.id);
-                thisDiv.style.backgroundColour = "black";
-                console.log(thisDiv.style.backgroundColour);
+                thisDiv.style.backgroundColor = "black";
+                // console.log(thisDiv.style.backgroundColour);
                 // setTimeout(() => {thisDiv.style.backgroundColour = "pink"}, 50)
             });
         };
@@ -89,12 +89,12 @@
         clearScreen.addEventListener("click", () => {
             let easDivs = document.querySelectorAll(".eas_div");
             easDivs.forEach(resetBackground);
-        })
+        });
 
         // function used to clear screen by resetting colour for each div
         function resetBackground(item) {
             item.style.backgroundColour = "lightslategray";
-        }
+        };
 
         const buildGrid = document.getElementById("buildGrid");
         buildGrid.addEventListener("click", () => {
@@ -117,7 +117,7 @@
             }
             grid.textContent = "";
             makeGrid(resolution, resolution);
-        }
+        };
 
         // function setColourMode(colourMode) {
         //     if (colourMode === 0) {
