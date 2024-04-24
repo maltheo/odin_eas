@@ -31,6 +31,7 @@
             <button id="buildGrid">Build grid</button>
         </div>
         <button id="clearScreen">Clear screen</button>
+        <button id="colourMode" onclick="changeColourMode(colourMode)">Colour mode: black</button>
     </div>
 
     <script>
@@ -41,10 +42,11 @@
         const SCREEN_HEIGHT = window.innerHeight;
         const gridSize = Math.min(SCREEN_WIDTH, SCREEN_HEIGHT);
         const LIMIT = 100;
+        let colourMode = 0;
         console.log(gridSize);
 
-        // set up a grid of divs with a background color
-        function makeGrid(ROW_COUNT = 16, COL_COUNT = 16, LIMIT) {
+        // set up a grid of divs with a background colour
+        function makeGrid(ROW_COUNT = 16, COL_COUNT = 16, colourMode = 0, LIMIT) {
             // const ROW_COUNT = 16;
             // const COL_COUNT = 16;
             const grid = document.querySelector("#grid");
@@ -52,14 +54,14 @@
             switch (ROW_COUNT > LIMIT) {
                 case true:
                     ROW_COUNT = LIMIT;
-                    alert("Row count exceeds limit (100), value reset to this.")
-            }
+                    alert("Row count exceeds limit (100), value reset to this.");
+            };
 
             switch (COL_COUNT > LIMIT) {
                 case true:
                 COL_COUNT = LIMIT;
-                    alert("Column count exceeds limit (100), value reset to this.")
-            }
+                    alert("Column count exceeds limit (100), value reset to this.");
+            };
 
             for (let col_index = 0; col_index <= COL_COUNT -1; col_index++) {
                 row_div = document.createElement("div");
@@ -71,12 +73,13 @@
                 };
                 grid.appendChild(row_div);
             };
-            // make background color of hovered-over div change
+            // make background colour of hovered-over div change
             grid.addEventListener("mouseover", (event) => {
                 console.log(event.target);
                 thisDiv = document.getElementById(event.target.id);
-                thisDiv.style.backgroundColor = "black";
-                // setTimeout(() => {thisDiv.style.backgroundColor = "pink"}, 50)
+                thisDiv.style.backgroundColour = "black";
+                console.log(thisDiv.style.backgroundColour);
+                // setTimeout(() => {thisDiv.style.backgroundColour = "pink"}, 50)
             });
         };
         makeGrid();
@@ -88,9 +91,9 @@
             easDivs.forEach(resetBackground);
         })
 
-        // function used to clear screen by resetting color for each div
+        // function used to clear screen by resetting colour for each div
         function resetBackground(item) {
-            item.style.backgroundColor = "lightslategray";
+            item.style.backgroundColour = "lightslategray";
         }
 
         const buildGrid = document.getElementById("buildGrid");
@@ -115,6 +118,28 @@
             grid.textContent = "";
             makeGrid(resolution, resolution);
         }
+
+        // function setColourMode(colourMode) {
+        //     if (colourMode === 0) {
+        //         return "black";
+        //     } else {
+        //         return randomColour();
+        //     }
+        // }
+
+        // let colourDict = {
+        //     "0": "black",
+        //     "1": "blue"
+        // };
+        // function changeColourMode(colourMode) {
+        //     const button = document.getElementById("colourMode");
+        //     colourMode += 1;
+        //     button.textContent = `Colour mode: ${colourDict[colourMode]}`;
+        // };
+
+        // function theColour() {
+        //     return "black";
+        // };
     </script>
 </body>
 </html>
