@@ -8,7 +8,17 @@
 </head>
 <body>
     <div id="input_form">
-        <h3>Etch-a-sketch using divs!</h3>
+        <h1>Etch-a-sketch using divs!</h3>
+    </div>
+    <button id="promptGrid" onclick="promptGrid()">Build me a grid!</button>
+
+    <div id="eas">
+        <div id="grid">
+        </div>
+    </div>
+
+    <div>
+        <h3>Toolkit</h3>
         <div>
             <label for="row_count">Number of rows</label>
             <input id="row_count" value="16">
@@ -20,14 +30,6 @@
         <div>
             <button id="buildGrid">Build grid</button>
         </div>
-    </div>
-
-    <div id="eas">
-        <div id="grid">
-        </div>
-    </div>
-
-    <div>
         <button id="clearScreen">Clear screen</button>
     </div>
 
@@ -38,13 +40,26 @@
         const SCREEN_WIDTH = window.innerWidth;
         const SCREEN_HEIGHT = window.innerHeight;
         const gridSize = Math.min(SCREEN_WIDTH, SCREEN_HEIGHT);
+        const LIMIT = 100;
         console.log(gridSize);
 
         // set up a grid of divs with a background color
-        function makeGrid(ROW_COUNT = 16, COL_COUNT = 16) {
+        function makeGrid(ROW_COUNT = 16, COL_COUNT = 16, LIMIT) {
             // const ROW_COUNT = 16;
             // const COL_COUNT = 16;
             const grid = document.querySelector("#grid");
+
+            switch (ROW_COUNT > LIMIT) {
+                case true:
+                    ROW_COUNT = LIMIT;
+                    alert("Row count exceeds limit (100), value reset to this.")
+            }
+
+            switch (COL_COUNT > LIMIT) {
+                case true:
+                COL_COUNT = LIMIT;
+                    alert("Column count exceeds limit (100), value reset to this.")
+            }
 
             for (let col_index = 0; col_index <= COL_COUNT -1; col_index++) {
                 row_div = document.createElement("div");
@@ -80,11 +95,26 @@
 
         const buildGrid = document.getElementById("buildGrid");
         buildGrid.addEventListener("click", () => {
-            let rows = Number(document.getElementById("row_count").value);
-            let cols = Number(document.getElementById("col_count").value);
+            const rows = Number(document.getElementById("row_count").value);
+            const cols = Number(document.getElementById("col_count").value);
             grid.textContent = "";
             makeGrid(rows, cols);
         });
+
+        function promptGrid(LIMIT) {
+            const gridRes = prompt("What square grid resolution (max. 100x100) are you looking for?", "16");
+            let resolution = Number(gridRes);
+            console.log(resolution);
+            console.log(resolution > LIMIT);
+            switch (resolution > LIMIT) {
+                case true:
+                    alert("Limit (100) exceeded, resetting to max allowable resolution.")
+                    resolution = 100;
+                    console.log(resolution);
+            }
+            grid.textContent = "";
+            makeGrid(resolution, resolution);
+        }
     </script>
 </body>
 </html>
