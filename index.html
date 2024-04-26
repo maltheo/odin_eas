@@ -31,7 +31,7 @@
             <button id="buildGrid">Build grid</button>
         </div>
         <button id="clearScreen">Clear screen</button>
-        <!-- <button id="colourMode" onclick="changeColourMode(colourMode)">Colour mode: black</button> -->
+        <button id="colourMode" onclick="changeColourMode()">Colour mode: black</button>
     </div>
 
     <script>
@@ -77,7 +77,7 @@
             grid.addEventListener("mouseover", (event) => {
                 console.log(event.target);
                 thisDiv = document.getElementById(event.target.id);
-                thisDiv.style.backgroundColor = "black";
+                thisDiv.style.backgroundColor = theColour();
                 // console.log(thisDiv.style.backgroundColour);
                 // setTimeout(() => {thisDiv.style.backgroundColour = "pink"}, 50)
             });
@@ -93,7 +93,7 @@
 
         // function used to clear screen by resetting colour for each div
         function resetBackground(item) {
-            item.style.backgroundColour = "lightslategray";
+            item.style.backgroundColor = "lightslategray";
         };
 
         const buildGrid = document.getElementById("buildGrid");
@@ -119,27 +119,31 @@
             makeGrid(resolution, resolution);
         };
 
-        // function setColourMode(colourMode) {
-        //     if (colourMode === 0) {
-        //         return "black";
-        //     } else {
-        //         return randomColour();
-        //     }
-        // }
+        function theColour() {
+            if (colourMode === 0) {
+                return "black";
+            } else {
+                return `rgb(${randRGB()}, ${randRGB()}, ${randRGB()})`;
+            }
+        }
 
-        // let colourDict = {
-        //     "0": "black",
-        //     "1": "blue"
-        // };
-        // function changeColourMode(colourMode) {
-        //     const button = document.getElementById("colourMode");
-        //     colourMode += 1;
-        //     button.textContent = `Colour mode: ${colourDict[colourMode]}`;
-        // };
+        let colourDict = {
+            "0": "black",
+            "1": "random"
+        };
+        function changeColourMode() {
+            const button = document.getElementById("colourMode");
+            colourMode += 1;
+            if (colourMode >= Object.keys(colourDict).length) {
+                colourMode = 0;
+            }
+            console.log(colourMode);
+            button.textContent = `Colour mode: ${colourDict[colourMode]}`;
+        };
 
-        // function theColour() {
-        //     return "black";
-        // };
+        function randRGB() {
+            return Math.floor(Math.random()*255)
+        }
     </script>
 </body>
 </html>
