@@ -32,6 +32,7 @@
         </div>
         <button id="clearScreen">Clear screen</button>
         <button id="colourMode" onclick="changeColourMode()">Colour mode: black</button>
+        <button id="opacity" onclick="changeOpacity()">Opacity: Off</button>
     </div>
 
     <script>
@@ -43,6 +44,7 @@
         const gridSize = Math.min(SCREEN_WIDTH, SCREEN_HEIGHT);
         const LIMIT = 100;
         let colourMode = 0;
+        let alpha = 1;
         console.log(gridSize);
 
         // set up a grid of divs with a background colour
@@ -78,10 +80,12 @@
                 console.log(event.target);
                 thisDiv = document.getElementById(event.target.id);
                 thisDiv.style.backgroundColor = theColour();
+                thisDiv.style.opacity = theOpacity();
+                // thisDiv.style.opacity = alpha;
                 // console.log(thisDiv.style.backgroundColour);
                 // setTimeout(() => {thisDiv.style.backgroundColour = "pink"}, 50)
             });
-        };
+        }
         makeGrid();
 
         // add functionality to clear screen button
@@ -94,7 +98,7 @@
         // function used to clear screen by resetting colour for each div
         function resetBackground(item) {
             item.style.backgroundColor = "lightslategray";
-        };
+        }
 
         const buildGrid = document.getElementById("buildGrid");
         buildGrid.addEventListener("click", () => {
@@ -114,17 +118,17 @@
                     alert("Limit (100) exceeded, resetting to max allowable resolution.")
                     resolution = 100;
                     console.log(resolution);
-            }
+            };
             grid.textContent = "";
             makeGrid(resolution, resolution);
-        };
+        }
 
         function theColour() {
             if (colourMode === 0) {
                 return "black";
             } else {
                 return `rgb(${randRGB()}, ${randRGB()}, ${randRGB()})`;
-            }
+            };
         }
 
         let colourDict = {
@@ -136,13 +140,41 @@
             colourMode += 1;
             if (colourMode >= Object.keys(colourDict).length) {
                 colourMode = 0;
-            }
+            };
             console.log(colourMode);
             button.textContent = `Colour mode: ${colourDict[colourMode]}`;
-        };
+        }
 
         function randRGB() {
             return Math.floor(Math.random()*255)
+        }
+
+        const switchOptions = {
+            "0": "Off",
+            "1": "On"
+        };
+        let opacitySwitch = 0;
+        function changeOpacity() {
+            const button = document.getElementById("opacity");
+            opacitySwitch += 1;
+            if (opacitySwitch >= Object.keys(switchOptions).length) {
+                opacitySwitch = 0;
+            };
+            console.log(opacitySwitch);
+            button.textContent = `Opacity: ${switchOptions[opacitySwitch]}`;
+        }
+
+        // let alpha = 1.1;
+        function theOpacity() {
+            switch (opacitySwitch) {
+                case 1:
+                    alpha -= 0.1;
+                    if (alpha < 0) {alpha = 1;};
+                    return alpha;
+                    break;
+                case 0:
+                    return 1;
+            }
         }
     </script>
 </body>
